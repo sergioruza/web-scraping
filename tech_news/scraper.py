@@ -3,7 +3,6 @@ import time
 from parsel import Selector
 
 
-# Requisito 1
 def fetch(url):
     try:
         time.sleep(1)
@@ -19,7 +18,6 @@ def fetch(url):
     return None
 
 
-# Requisito 2
 def scrape_updates(html_content):
     selector = Selector(text=html_content)
     posts_url = []
@@ -28,18 +26,33 @@ def scrape_updates(html_content):
     return posts_url
 
 
-# Requisito 3
 def scrape_next_page_link(html_content):
     selector = Selector(text=html_content)
     next_page = selector.css("a.next::attr(href)").get()
     return next_page
 
 
-# Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+
+    title = selector.css("h1.entry-title::text").get()
+    reading_time = (
+        selector.css("li.meta-reading-time::text").get().split(" ")[0]
+    )
+    summary = selector.css(".entry-content p:first-child *::text").getall()
+    summary = " ".join(summary).strip()
+    category = selector.css(".label::text").get()
+
+    return {
+        "url": selector.css('link[rel="canonical"]::attr(href)').get(),
+        "title": title.strip(" "),
+        "timestamp": selector.css(".meta-date::text").get(),
+        "writer": selector.css(".author a::text").get(),
+        "reading_time": int(reading_time),
+        "summary": summary.strip(" "),
+        "category": category.strip(" "),
+    }
 
 
-# Requisito 5
 def get_tech_news(amount):
-    """Seu código deve vir aqui"""
+    pass
