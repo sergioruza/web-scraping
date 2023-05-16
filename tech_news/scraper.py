@@ -1,6 +1,21 @@
+import requests
+import time
+
+
 # Requisito 1
 def fetch(url):
-    pass
+    try:
+        time.sleep(1)
+        request = requests.get(
+            url, headers={"user-agent": "Fake user-agent"}, timeout=3
+        )
+        status_code = request.status_code
+        if status_code == 200:
+            return request.text
+        return None
+    except requests.exceptions.RequestException:
+        pass
+    return None
 
 
 # Requisito 2
