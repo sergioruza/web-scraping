@@ -30,7 +30,9 @@ def scrape_updates(html_content):
 
 # Requisito 3
 def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+    next_page = selector.css("a.next::attr(href)").get()
+    return next_page
 
 
 # Requisito 4
@@ -41,7 +43,3 @@ def scrape_news(html_content):
 # Requisito 5
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
-
-
-# cs-overlay-link
-#   next_page = selector.css(".nav-links a::attr(href)").get()
