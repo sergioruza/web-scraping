@@ -1,7 +1,6 @@
 import requests
 import time
 from parsel import Selector
-import re
 
 
 def fetch(url):
@@ -56,4 +55,16 @@ def scrape_news(html_content):
 
 
 def get_tech_news(amount):
-    pass
+    BASE_URL = "https://blog.betrybe.com/"
+    news_list = []
+
+    while len(news_list) < amount:
+        html_content = fetch(BASE_URL)
+        for url in scrape_updates(html_content):
+            html = fetch(url)
+            news = scrape_news(html)
+            news_list.append = news
+
+        next_page = scrape_next_page_link(html_content)
+        BASE_URL = next_page
+    return news_list
