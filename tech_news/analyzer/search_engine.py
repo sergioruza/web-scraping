@@ -5,7 +5,6 @@ from datetime import datetime
 def search_by_title(title):
     title_insensitive = {"$regex": title, "$options": "i"}
     news = search_news({"title": title_insensitive})
-    print(news)
     list_news = []
     for post in news:
         list_news.append((post["title"], post["url"]))
@@ -42,6 +41,3 @@ def search_by_category(category):
         list_news.append((post["title"], post["url"]))
 
     return list_news
-
-
-search_by_title("Algoritmos")
