@@ -1,6 +1,7 @@
 import requests
 import time
 from parsel import Selector
+import re
 
 
 def fetch(url):
@@ -39,17 +40,17 @@ def scrape_news(html_content):
     reading_time = (
         selector.css("li.meta-reading-time::text").get().split(" ")[0]
     )
-    summary = selector.css(".entry-content p:first-child *::text").getall()
-    summary = " ".join(summary).strip()
+    summary = selector.css(".entry-content > p:first-of-type *::text").getall()
+    summary = "".join(summary)
     category = selector.css(".label::text").get()
 
     return {
         "url": selector.css('link[rel="canonical"]::attr(href)').get(),
-        "title": title.strip(" "),
+        "title": title.rstrip(),
         "timestamp": selector.css(".meta-date::text").get(),
         "writer": selector.css(".author a::text").get(),
         "reading_time": int(reading_time),
-        "summary": summary.strip(" "),
+        "summary": summary.rstrip(),
         "category": category.strip(" "),
     }
 
