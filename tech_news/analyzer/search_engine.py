@@ -1,13 +1,23 @@
-# Requisito 7
+from tech_news.database import search_news
+
+
 def search_by_title(title):
-    """Seu código deve vir aqui"""
+    title_insensitive = {"$regex": title, "$options": "i"}
+    news = search_news({"title": title_insensitive})
+    list_news = []
+
+    for post in news:
+        list_news.append((post["title"], post["url"]))
+
+    return list_news
 
 
-# Requisito 8
 def search_by_date(date):
-    """Seu código deve vir aqui"""
+    pass
 
 
-# Requisito 9
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    pass
+
+
+search_by_title("Algoritmos")
