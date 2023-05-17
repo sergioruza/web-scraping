@@ -1,6 +1,7 @@
 import requests
 import time
 from parsel import Selector
+from tech_news.database import create_news
 
 
 def fetch(url):
@@ -63,8 +64,11 @@ def get_tech_news(amount):
         for url in scrape_updates(html_content):
             html = fetch(url)
             news = scrape_news(html)
-            news_list.append = news
+            news_list.append(news)
 
         next_page = scrape_next_page_link(html_content)
         BASE_URL = next_page
+
+    print(news_list[0])
+    create_news(news_list)
     return news_list
