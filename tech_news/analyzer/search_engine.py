@@ -35,7 +35,13 @@ def search_by_date(date):
 
 
 def search_by_category(category):
-    pass
+    category_insensitive = {"$regex": category, "$options": "i"}
+    news = search_news({"category": category_insensitive})
+    list_news = []
+    for post in news:
+        list_news.append((post["title"], post["url"]))
+
+    return list_news
 
 
 search_by_title("Algoritmos")
