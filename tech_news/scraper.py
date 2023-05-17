@@ -62,6 +62,8 @@ def get_tech_news(amount):
     while len(news_list) < amount:
         html_content = fetch(BASE_URL)
         for url in scrape_updates(html_content):
+            if len(news_list) >= amount:
+                break
             html = fetch(url)
             news = scrape_news(html)
             news_list.append(news)
@@ -72,3 +74,6 @@ def get_tech_news(amount):
     print(news_list[0])
     create_news(news_list)
     return news_list
+
+
+get_tech_news(5)
