@@ -1,8 +1,8 @@
-from tech_news.database import search_news
+from tech_news.database import db
 
 
 def top_5_categories():
-    all_news = search_news(None)
+    all_news = list(db.news.find({}, {"_id": False, "category": True}))
 
     count = {}
 
@@ -14,5 +14,5 @@ def top_5_categories():
         else:
             count[category] = 1
 
-    sort = sorted(count, key=lambda x: count[x], reverse=True)[:5]
+    sort = sorted(count, key=lambda x: (count[x], x), reverse=False)[:5]
     return sort
